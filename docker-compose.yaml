@@ -1,14 +1,29 @@
 version: "4"
+#services:
+#  mysql:
+#    image: mysql:8
+#    container_name: mysqldb
+#    environment:
+#      MYSQL_ROOT_PASSWORD: mysql
+#    ports:
+#      - "3316:3306"
+#    volumes:
+#      - ./mysql-data:/var/lib/mysql
+#      - ./docker/init.sql:/docker-entrypoint-initdb.d/init.sql
+#volumes:
+#    mysql-data:
 services:
-  mysql:
-    image: mysql:8
-    container_name: mysqldb
+  postgres:
+    image: postgres:latest
+    container_name: postgresdb
     environment:
-      MYSQL_ROOT_PASSWORD: mysql
+      POSTGRES_DB: spring_security_jwt
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
     ports:
-      - "3316:3306"
+      - "5432:5432"
     volumes:
-      - ./mysql-data:/var/lib/mysql
+      - ./pg-data:/var/lib/postgresql/data
       - ./docker/init.sql:/docker-entrypoint-initdb.d/init.sql
 volumes:
-    mysql-data:
+  pg-data:
