@@ -13,6 +13,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
@@ -25,9 +27,11 @@ public class AuthenticationService {
     public void register(RegisterRequest registerRequest) {
         var user = User.fromRegisterRequest(registerRequest);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.saveUser(user);
+        userRepository.save(user);
     }
-
+    public Optional<User> findByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
     public LoginResponse login(LoginRequest loginRequest) {
         Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.username(),
                 loginRequest.password()));
